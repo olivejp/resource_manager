@@ -21,9 +21,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCLOUD_ACCOUNT_SECRET }}
 
-      - name: Build with Maven
+      - name: Setup Java 11
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'
+
+      - name: Build
         run: mvn clean package appengine:deploy -P gcp -DskipTests
