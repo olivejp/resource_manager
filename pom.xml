@@ -15,20 +15,30 @@
     <description>resource_manager</description>
     <properties>
         <java.version>11</java.version>
+        <active.profile>dev</active.profile>
     </properties>
     <profiles>
         <profile>
-            <id>cloud-gcp</id>
+            <id>dev</id>
+            <properties>
+                <active.profile>dev</active.profile>
+            </properties>
+        </profile>
+        <profile>
+            <id>gcp</id>
+            <properties>
+                <active.profile>gcp</active.profile>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-gcp-starter</artifactId>
-                    <version>1.0.0.RELEASE</version>
+                    <version>1.2.8.RELEASE</version>
                 </dependency>
                 <dependency>
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
-                    <version>1.0.0.RELEASE</version>
+                    <version>1.2.8.RELEASE</version>
                 </dependency>
             </dependencies>
             <build>
@@ -77,6 +87,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -109,13 +120,13 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.6</version>
+            <version>1.6.7</version>
         </dependency>
 
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-data-rest</artifactId>
-            <version>1.6.6</version>
+            <version>1.6.7</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

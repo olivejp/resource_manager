@@ -1,9 +1,11 @@
-runtime: java
-env: flex
+runtime: java11
+#env: flex
 runtime_config:
-  jdk: openjdk8
+  jdk: openjdk11
 env_variables:
   SPRING_PROFILES_ACTIVE: "gcp,mysql"
+  SPRING_DATASOURCE_USER: mysql-user
+  SPRING_DATASOURCE_PASSWORD: Je@n-P@ul84
 handlers:
   - url: /.*
     script: this field is required, but ignored

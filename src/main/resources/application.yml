@@ -1,6 +1,10 @@
 server:
   port: 8081
 spring:
+  profiles:
+    active: @active.profile@
+  application:
+    name: ResourceManager
   security:
     user:
       name: admin
@@ -14,15 +18,6 @@ spring:
       ddl-auto: update
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    username: user
-    password: password
-    url: jdbc:mysql://localhost:3306/resourcemanager-db
-    hikari:
-      poolName: Hikari
-      auto-commit: true
-      driver-class-name: com.mysql.cj.jdbc.Driver
-
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   liquibase:
     enabled: false

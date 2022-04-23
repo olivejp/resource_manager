@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: ${SPRING_DATASOURCE_USER}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  cloud:
+    gcp:
+      sql:
+        instance-connection-name: resourcemanager-2a15b:australia-southeast1:resourcemanager-db
+        database-name: resourcemanager-db
