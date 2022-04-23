@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  resource-manager-mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: mysql_resourcemanager
+    environment:
+      - MYSQL_DATABASE=resourcemanager-db  # So you don't have to use root, but you can if you like
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password # You can use whatever password you like
+      - MYSQL_ROOT_PASSWORD=password # Password for root access
+    ports:
+      - "3306:3306"
+    volumes:
+      - my-db=/var/lib/mysql
+volumes:
+  my-db:
