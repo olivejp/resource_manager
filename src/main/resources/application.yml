@@ -1,0 +1,28 @@
+server:
+  port: 8081
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+      roles:
+        - ADMIN
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    username: resource_manager
+    password:
+    url: jdbc:postgresql://localhost:5433/resource_manager
+    hikari:
+      poolName: Hikari
+      auto-commit: true
+      driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    enabled: false

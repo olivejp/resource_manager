@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  resource-manager-postgresql:
+    image: postgres:14.1
+    container_name: postgres_resource_manager
+    environment:
+      - POSTGRES_USER=resource_manager
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5433:5432
