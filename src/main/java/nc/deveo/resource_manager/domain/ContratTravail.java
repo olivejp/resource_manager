@@ -1,5 +1,6 @@
 package nc.deveo.resource_manager.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,12 +8,14 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "contrat")
+@Table(name = "contrat_travail")
 @Getter
 @Setter
-public class Contrat implements Serializable {
+public class ContratTravail implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -21,9 +24,9 @@ public class Contrat implements Serializable {
     @JsonSerialize
     private Long id;
 
-    @Column(name = "type_contrat", nullable = false)
+    @Column(name = "type_contrat_travail", nullable = false)
     @Enumerated(EnumType.STRING)
-    private TypeContrat typeContrat;
+    private TypeContratTravail typeContratTravail;
 
     @Column(name = "date_debut")
     private LocalDateTime dateDebut;
@@ -34,13 +37,11 @@ public class Contrat implements Serializable {
     @Column(name = "observation")
     private String observation;
 
-    @Column(name = "contrat_url", length = 3000)
-    private String contratUrl;
-
-    @Column(name = "contrat_filename", length = 2000)
-    private String contratFilename;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teamate_id", nullable = false)
-    private Teamate teamate;
+    private Teammate teammate;
+
+    @JsonIgnoreProperties("teammate")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Document> listDocument = new ArrayList<>();
 }

@@ -12,6 +12,7 @@ spring:
       roles:
         - ADMIN
   jpa:
+    open-in-view: true
     database: mysql
     show-sql: true
     hibernate:

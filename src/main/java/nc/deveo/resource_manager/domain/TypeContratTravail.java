@@ -1,6 +1,6 @@
 package nc.deveo.resource_manager.domain;
 
-public enum TypeContrat {
+public enum TypeContratTravail {
     CDD,
     CDI,
     CDIC

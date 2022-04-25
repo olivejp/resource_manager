@@ -1,6 +1,5 @@
 package nc.deveo.resource_manager.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,10 +8,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "document")
+@Table(name = "client")
 @Getter
 @Setter
-public class Document implements Serializable {
+public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -21,9 +20,9 @@ public class Document implements Serializable {
     @JsonSerialize
     private Long id;
 
-    @Column(name = "url", length = 2000)
-    private String url;
+    @Column(name = "ridet")
+    private String ridet;
 
-    @Column(name = "filename", length = 2000)
-    private String filename;
+    @Column(name = "raison_sociale", length = 2000)
+    private String raisonSociale;
 }

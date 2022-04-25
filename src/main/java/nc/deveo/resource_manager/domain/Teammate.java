@@ -12,14 +12,13 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Entity
-@Table(name = "teamate")
+@Table(name = "teammate")
 @Getter
 @Setter
-public class Teamate implements Serializable {
+public class Teammate implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String EMAIL_PATTERN = "^([\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4})$|";
@@ -57,18 +56,13 @@ public class Teamate implements Serializable {
     @Column(name = "description", length = 2000)
     private String description;
 
-    @ManyToMany
-    @JoinTable(
-            name = "teamate_competence",
-            joinColumns = @JoinColumn(name = "teamate_id"),
-            inverseJoinColumns = @JoinColumn(name = "competence_id"))
-    private List<Competence> listCompetence;
+    @OneToMany(mappedBy = "teammate")
+    private List<TeammateCompetence> listCompetence;
 
-    @JsonIgnoreProperties("teamate")
-    @OneToMany(mappedBy = "teamate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Contrat> listContrat = new ArrayList<>();
+    @JsonIgnoreProperties("teammate")
+    @OneToMany(mappedBy = "teammate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ContratTravail> listContratTravail = new ArrayList<>();
 
-    @JsonIgnoreProperties("teamate")
-    @OneToMany(mappedBy = "teamate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Document> listDocument = new ArrayList<>();
 }
