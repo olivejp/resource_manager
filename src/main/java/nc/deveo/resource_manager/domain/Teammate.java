@@ -53,6 +53,7 @@ public class Teammate implements Serializable {
     @Column(name = "telephone")
     private String telephone;
 
+    @Size(max = 2000)
     @Column(name = "description", length = 2000)
     private String description;
 
