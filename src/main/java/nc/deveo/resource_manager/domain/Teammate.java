@@ -2,8 +2,7 @@ package nc.deveo.resource_manager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
@@ -12,12 +11,17 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "teammate")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Teammate implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -61,9 +65,9 @@ public class Teammate implements Serializable {
     private List<TeammateCompetence> listCompetence;
 
     @JsonIgnoreProperties("teammate")
-    @OneToMany(mappedBy = "teammate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teammate", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
     private List<ContratTravail> listContratTravail = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Document> listDocument = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    private Set<Document> listDocument = new HashSet<>();
 }
