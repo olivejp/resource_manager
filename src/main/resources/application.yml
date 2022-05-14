@@ -1,3 +1,6 @@
+firebase:
+  bucket-name: resource-manager-bucket
+  project-id: resourcemanager-2a15b
 server:
   port: 8081
 spring:
