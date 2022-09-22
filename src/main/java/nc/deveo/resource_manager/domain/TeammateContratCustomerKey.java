@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 @Embeddable
 @EqualsAndHashCode
-public class TeammateContratClientKey implements Serializable {
+public class TeammateContratCustomerKey implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Column(name = "teammate_id")
     Long teammateId;
 
-    @Column(name = "contrat_client_id")
-    Long contratClientId;
+    @Column(name = "contrat_customer_id")
+    Long contratCustomerId;
 }

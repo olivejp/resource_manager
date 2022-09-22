@@ -23,13 +23,11 @@ import java.util.Objects;
 public class FirebaseService {
 
     private final String bucketName;
-    private final String projectId;
     private final StorageOptions storageOptions;
 
     public FirebaseService(@Value("${firebase.bucket-name}") String bucketName,
                            @Value("${firebase.project-id}") String projectId) {
         this.bucketName = bucketName;
-        this.projectId = projectId;
         try {
             final FileInputStream serviceAccount =
                     new FileInputStream("service-account.json");
@@ -50,31 +48,29 @@ public class FirebaseService {
         return convertedFile;
     }
 
-    private String generateFileName(MultipartFile multiPart) {
+    public String generateFileName(MultipartFile multiPart) {
         return new Date().getTime() + "-" + Objects.requireNonNull(multiPart.getOriginalFilename()).replace(" ", "_");
     }
 
-    public String uploadFile(MultipartFile multipartFile) throws IOException {
-        File file = convertMultiPartToFile(multipartFile);
-        Path filePath = file.toPath();
-        String objectName = generateFileName(multipartFile);
+    public Blob uploadFile(final String objectName, final MultipartFile multipartFile) throws IOException {
+        final File file = convertMultiPartToFile(multipartFile);
+        final Path filePath = file.toPath();
 
-        Storage storage = storageOptions.getService();
+        final Storage storage = storageOptions.getService();
 
-        BlobId blobId = BlobId.of(bucketName, objectName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
-        storage.create(blobInfo, Files.readAllBytes(filePath));
-        return objectName;
+        final BlobId blobId = BlobId.of(bucketName, objectName);
+        final BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+        return storage.create(blobInfo, Files.readAllBytes(filePath));
     }
 
-    public byte[] downloadFile(String fileName) throws Exception {
-        Storage storage = storageOptions.getService();
+    public byte[] downloadFile(String fileName) throws IOException {
+        final Storage storage = storageOptions.getService();
 
-        Blob blob = storage.get(BlobId.of(bucketName, fileName));
-        ReadChannel reader = blob.reader();
-        InputStream inputStream = Channels.newInputStream(reader);
+        final Blob blob = storage.get(BlobId.of(bucketName, fileName));
+        final ReadChannel reader = blob.reader();
+        final InputStream inputStream = Channels.newInputStream(reader);
 
-        byte[] content = null;
+        byte[] content;
         log.info("File downloaded successfully.");
 
         content = IOUtils.toByteArray(inputStream);

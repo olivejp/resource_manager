@@ -16,39 +16,39 @@ import javax.validation.Valid;
 @Log4j2
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/competence")
 public class CompetenceController {
 
     private final CompetenceRepository repository;
 
-    @GetMapping("/competence")
+    @GetMapping
     public ResponseEntity<Page<Competence>> getAll(final Pageable pageable) {
         log.debug("REST request to get all competence");
         final Page<Competence> competencePage = repository.findAll(pageable);
         return ResponseEntity.ok().body(competencePage);
     }
 
-    @GetMapping("/competence/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Competence> get(@PathVariable final Long id) {
         return repository.findById(id)
                 .map(competence -> ResponseEntity.ok().body(competence))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/competence")
+    @PostMapping
     public ResponseEntity<Competence> create(@RequestBody @Valid Competence competenceToCreate) {
         final Competence competenceCreated = repository.save(competenceToCreate);
         return ResponseEntity.ok().body(competenceCreated);
     }
 
-    @PutMapping("/competence/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Competence> update(@PathVariable Long id,
                                              @RequestBody @Valid Competence competenceToUpdate) {
         final Competence competenceUpdated = repository.save(competenceToUpdate);
         return ResponseEntity.ok().body(competenceUpdated);
     }
 
-    @DeleteMapping("/competence/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         repository.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

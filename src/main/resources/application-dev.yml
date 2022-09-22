@@ -1,3 +1,7 @@
+resource:
+  cors:
+    allowed-origins:
+      - http://localhost:7777
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

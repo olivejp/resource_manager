@@ -8,14 +8,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "teammate_contrat_client")
+@Table(name = "teammate_contrat_customer")
 @Getter
 @Setter
-public class TeammateContratClient implements Serializable {
+public class TeammateContratCustomer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    TeammateContratClientKey id;
+    TeammateContratCustomerKey id;
 
     @ManyToOne
     @MapsId("teammateId")
@@ -23,9 +23,9 @@ public class TeammateContratClient implements Serializable {
     Teammate teammate;
 
     @ManyToOne
-    @MapsId("contratClientId")
-    @JoinColumn(name = "contrat_client_id", nullable = false)
-    ContratClient contratClient;
+    @MapsId("contratCustomerId")
+    @JoinColumn(name = "contrat_customer_id", nullable = false)
+    ContratCustomer contratCustomer;
 
     @Column(name = "date_debut", nullable = false)
     LocalDate dateDebut;

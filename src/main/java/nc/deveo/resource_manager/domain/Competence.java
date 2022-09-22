@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name = "competence")
@@ -27,7 +26,4 @@ public class Competence implements Serializable {
     @Size(max = 1000)
     @Column(name = "nom", length = 1000)
     private String nom;
-
-    @OneToMany(mappedBy = "competence")
-    private List<TeammateCompetence> teammates;
 }

@@ -1,3 +1,11 @@
+resource:
+  firebase-admin-key: ${FIREBASE_ADMIN_KEY}
+  cors:
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: "Authorization,X-Total-Count,Link,ETag"
+    allow-credentials: true
+    max-age: 1800
 firebase:
   bucket-name: resource-manager-bucket
   project-id: resourcemanager-2a15b
@@ -19,7 +27,7 @@ spring:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

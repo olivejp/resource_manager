@@ -1,18 +1,11 @@
 package nc.deveo.resource_manager.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,11 +15,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teammate implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    public static final String EMAIL_PATTERN = "^([\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4})$|";
-    public static final String TELEPHONE_PATTERN = "^(\\+687 ?)?([ .]?\\d\\d){3}$|";
+public class Teammate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
@@ -34,40 +23,38 @@ public class Teammate implements Serializable {
     @JsonSerialize
     private Long id;
 
-    @Size(max = 255)
     @Column(name = "nom", nullable = false)
     private String nom;
 
-    @Size(max = 255)
     @Column(name = "prenom", nullable = false)
     private String prenom;
 
-    @PastOrPresent
     @Column(name = "date_naissance")
     private LocalDateTime dateNaissance;
 
-    @Column(name = "photo_url", length = 2000)
-    private String photoUrl;
+    @Column(name = "photo", columnDefinition = "longtext")
+    private String photo;
 
-    @Pattern(regexp = EMAIL_PATTERN)
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Pattern(regexp = TELEPHONE_PATTERN)
     @Column(name = "telephone")
     private String telephone;
 
-    @Size(max = 2000)
     @Column(name = "description", length = 2000)
     private String description;
 
-    @OneToMany(mappedBy = "teammate")
-    private List<TeammateCompetence> listCompetence;
-
-    @JsonIgnoreProperties("teammate")
-    @OneToMany(mappedBy = "teammate", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-    private List<ContratTravail> listContratTravail = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "teammate_document",
+            joinColumns = @JoinColumn(
+                    name = "temmate_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "document_id",
+                    referencedColumnName = "id"
+            )
+    )
     private Set<Document> listDocument = new HashSet<>();
 }

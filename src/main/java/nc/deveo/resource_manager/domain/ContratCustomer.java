@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "contrat_client")
+@Table(name = "contrat_customer")
 @Getter
 @Setter
-public class ContratClient implements Serializable {
+public class ContratCustomer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -29,17 +29,14 @@ public class ContratClient implements Serializable {
     @Column(name = "date_fin")
     private LocalDateTime dateFin;
 
-    @Column(name = "type_contrat_client", nullable = false)
+    @Column(name = "type_contrat_customer", nullable = false)
     @Enumerated(EnumType.STRING)
-    private TypeContratClient typeContratClient;
+    private TypeContratCustomer typeContratCustomer;
 
     @Column(name = "observation")
     private String observation;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Document> listDocument = new ArrayList<>();
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 }
