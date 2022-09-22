@@ -5,7 +5,6 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nc.deveo.resource_manager.config.security.SecurityConfiguration;
 import nc.deveo.resource_manager.config.security.UserSecurity;
 import nc.deveo.resource_manager.repository.TeammateRepository;
 import org.springframework.lang.NonNull;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.security.auth.message.AuthException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,27 +34,28 @@ public class FirebaseTokenVerifierFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        verifyToken(request);
-        verifyTeammateExist(response);
+        final UserSecurity userSecurity = verifyToken(request);
+        verifyTeammateExist(response, userSecurity);
         filterChain.doFilter(request, response);
     }
 
-    private void verifyTeammateExist(HttpServletResponse response) throws IOException {
-        final String email = ((UserSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail();
+    private void verifyTeammateExist(HttpServletResponse response, UserSecurity userSecurity) throws IOException {
+        final String email = userSecurity.getEmail();
         if (!repository.existsByEmail(email)) {
             response.sendError(403, "L'utilisateur n'existe pas en base de données.");
         }
     }
 
-    private void verifyToken(HttpServletRequest request) {
+    private UserSecurity verifyToken(HttpServletRequest request) {
         final String token = resolveToken(request);
         if (token != null && !token.isEmpty()) {
             try {
                 final FirebaseToken firebaseToken = FirebaseAuth.getInstance().verifyIdToken(token);
-                final UserSecurity userSecurity = getUserSecurity(firebaseToken);
+                final UserSecurity userSecurity = getUserSecurityFromToken(firebaseToken);
                 final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userSecurity,
                         token, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                return userSecurity;
             } catch (FirebaseAuthException e) {
                 e.printStackTrace();
                 log.error("Firebase Exception: {}", e.getLocalizedMessage());
@@ -64,15 +63,17 @@ public class FirebaseTokenVerifierFilter extends OncePerRequestFilter {
         } else {
             log.warn("Aucun bearer a décodé.");
         }
+        return null;
     }
 
-    private UserSecurity getUserSecurity(FirebaseToken firebaseToken) {
+    private UserSecurity getUserSecurityFromToken(FirebaseToken firebaseToken) {
         return UserSecurity.builder()
                 .emailVerified(firebaseToken.isEmailVerified())
                 .name(firebaseToken.getName())
                 .photoUrl(firebaseToken.getPicture())
                 .name(firebaseToken.getName())
                 .uid(firebaseToken.getUid())
+                .email(firebaseToken.getEmail())
                 .build();
     }
 
