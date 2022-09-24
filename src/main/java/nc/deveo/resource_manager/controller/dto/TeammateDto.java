@@ -33,7 +33,6 @@ public class TeammateDto implements Serializable {
 
     private String photo;
 
-    @NotNull
     @Pattern(regexp = EMAIL_PATTERN, groups = CreationTeammate.class)
     private String email;
 

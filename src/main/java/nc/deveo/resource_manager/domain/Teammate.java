@@ -44,6 +44,7 @@ public class Teammate {
     @Column(name = "description", length = 2000)
     private String description;
 
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "teammate_document",

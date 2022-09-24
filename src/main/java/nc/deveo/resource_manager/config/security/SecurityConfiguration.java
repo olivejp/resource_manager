@@ -1,7 +1,7 @@
 package nc.deveo.resource_manager.config.security;
 
 import lombok.RequiredArgsConstructor;
-import nc.deveo.resource_manager.config.FirebaseTokenVerifierFilter;
+import nc.deveo.resource_manager.config.JwtTokenVerifierFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,7 +21,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
     private static final String EXTERNAL_API_PREFIX = "/api/**";
 
-    private final FirebaseTokenVerifierFilter firebaseVerifierToken;
+    private final JwtTokenVerifierFilter jwtTokenVerifierFilter;
 
     @Bean
     public Http401UnauthorizedEntryPoint securityException401EntryPoint() {
@@ -41,9 +41,11 @@ public class SecurityConfiguration {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(firebaseVerifierToken, UsernamePasswordAuthenticationFilter.class).httpBasic(withDefaults())
+                .addFilterBefore(jwtTokenVerifierFilter, UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(withDefaults())
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .antMatchers("/jwt").permitAll()
                         .antMatchers("/alive").permitAll()
                         .antMatchers("/i18n/**").permitAll()
                         .antMatchers("/content/**").permitAll()

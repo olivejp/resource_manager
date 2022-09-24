@@ -28,20 +28,6 @@ public class CongesService {
     private final CongesMapper mapper;
 
     public CongesDto save(CongesCreateDto dto) {
-        switch (dto.getTypeConges()) {
-            case AM:
-                dto.setDateDebut(dto.getDateDebut().withHour(8).withMinute(0).withSecond(0));
-                dto.setDateFin(dto.getDateDebut().withHour(12).withMinute(0).withSecond(0));
-                break;
-            case PM:
-                dto.setDateDebut(dto.getDateDebut().withHour(13).withMinute(0).withSecond(0));
-                dto.setDateFin(dto.getDateDebut().withHour(17).withMinute(0).withSecond(0));
-                break;
-            case ALL_DAY:
-                dto.setDateDebut(dto.getDateDebut().withHour(8).withMinute(0).withSecond(0));
-                dto.setDateFin(dto.getDateFin().withHour(17).withMinute(0).withSecond(0));
-                break;
-        }
         final Conges congesSaved = repository.save(mapper.toEntity(dto));
         return mapper.toDto(congesSaved);
     }
