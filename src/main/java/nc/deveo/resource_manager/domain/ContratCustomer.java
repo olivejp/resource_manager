@@ -3,12 +3,11 @@ package nc.deveo.resource_manager.domain;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
+import nc.deveo.resource_manager.domain.enums.TypeContratCustomer;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "contrat_customer")

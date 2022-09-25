@@ -3,6 +3,7 @@ package nc.deveo.resource_manager.domain;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
+import nc.deveo.resource_manager.domain.enums.TypeContratTravail;
 
 import javax.persistence.*;
 import java.io.Serializable;

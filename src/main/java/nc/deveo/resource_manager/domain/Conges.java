@@ -2,6 +2,8 @@ package nc.deveo.resource_manager.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
+import nc.deveo.resource_manager.domain.enums.CongesPortion;
+import nc.deveo.resource_manager.domain.enums.TypeConges;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +31,14 @@ public class Conges {
     private LocalDateTime dateDebut;
 
     private LocalDateTime dateFin;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CongesPortion portionDebut;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CongesPortion portionFin;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

@@ -3,6 +3,7 @@ package nc.deveo.resource_manager.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import nc.deveo.resource_manager.domain.enums.NiveauCompetence;
 
 import javax.persistence.*;
 import java.io.Serializable;

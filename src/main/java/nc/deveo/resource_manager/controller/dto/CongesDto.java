@@ -3,7 +3,8 @@ package nc.deveo.resource_manager.controller.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-import nc.deveo.resource_manager.domain.TypeConges;
+import nc.deveo.resource_manager.domain.enums.CongesPortion;
+import nc.deveo.resource_manager.domain.enums.TypeConges;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,6 +25,10 @@ public class CongesDto implements Serializable {
     private LocalDateTime dateFin;
 
     private TypeConges typeConges;
+
+    private CongesPortion portionDebut;
+
+    private CongesPortion portionFin;
 
     private String commentaire;
 }

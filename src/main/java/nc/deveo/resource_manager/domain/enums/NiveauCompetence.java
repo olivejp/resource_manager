@@ -1,4 +1,4 @@
-package nc.deveo.resource_manager.domain;
+package nc.deveo.resource_manager.domain.enums;
 
 public enum NiveauCompetence {
     JUNIOR,
