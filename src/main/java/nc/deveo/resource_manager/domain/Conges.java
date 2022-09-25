@@ -33,4 +33,7 @@ public class Conges {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TypeConges typeConges;
+
+    @Column(columnDefinition = "longtext")
+    private String commentaire;
 }

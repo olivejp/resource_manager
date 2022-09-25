@@ -1,5 +1,6 @@
 package nc.deveo.resource_manager.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import nc.deveo.resource_manager.domain.TypeConges;
@@ -15,6 +16,7 @@ public class CongesDto implements Serializable {
     @JsonSerialize
     private Long id;
 
+    @JsonIgnoreProperties({"photo", "description"})
     private TeammateDto teammate;
 
     private LocalDateTime dateDebut;
@@ -22,4 +24,6 @@ public class CongesDto implements Serializable {
     private LocalDateTime dateFin;
 
     private TypeConges typeConges;
+
+    private String commentaire;
 }

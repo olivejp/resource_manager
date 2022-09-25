@@ -22,4 +22,6 @@ public class CongesCreateDto implements Serializable {
 
     @NotNull
     private TypeConges typeConges;
+
+    private String commentaire;
 }
