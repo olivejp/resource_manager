@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
@@ -43,6 +44,7 @@ public class TeammateService {
 
     public TeammateDto save(TeammateDto teammateToSave) {
         final Teammate teammateUpdated = repository.save(mapper.toEntity(teammateToSave));
+        checkDateNaissance(teammateUpdated);
         return mapper.toDto(teammateUpdated);
     }
 
@@ -54,6 +56,7 @@ public class TeammateService {
     public TeammateDto patch(final Long id, final JsonPatch patch) throws JsonPatchException, JsonProcessingException {
         final Teammate teammateToUpdate = repository.findById(id).orElseThrow(NotFoundException::new);
         final Teammate teammatePatched = applyPatchToTeammate(patch, teammateToUpdate);
+        checkDateNaissance(teammatePatched);
         final Teammate teammateSaved = repository.save(teammatePatched);
         return mapper.toDto(teammateSaved);
     }
@@ -81,5 +84,11 @@ public class TeammateService {
 
     public Set<Document> getAllDocuments(Long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new).getListDocument();
+    }
+
+    private static void checkDateNaissance(Teammate teammateUpdated) {
+        if (teammateUpdated.getDateNaissance().isAfter(LocalDate.now())) {
+            throw new RuntimeException("La date de naissance ne peut être dans le futur.");
+        }
     }
 }

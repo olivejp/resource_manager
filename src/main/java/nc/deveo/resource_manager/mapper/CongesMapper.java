@@ -1,6 +1,6 @@
 package nc.deveo.resource_manager.mapper;
 
-import nc.deveo.resource_manager.controller.dto.CongesCreateDto;
+import nc.deveo.resource_manager.controller.dto.CongesPersistDto;
 import nc.deveo.resource_manager.controller.dto.CongesDto;
 import nc.deveo.resource_manager.domain.Conges;
 import org.mapstruct.*;
@@ -12,9 +12,15 @@ import org.mapstruct.*;
 public interface CongesMapper {
 
     @Mappings({
-            @Mapping(target = "teammate", source = "teammateId", qualifiedByName = "getTeammate")
+            @Mapping(target = "teammate", source = "teammateId", qualifiedByName = "getTeammate"),
+            @Mapping(target = "dateDebut", source = "dateDebut", dateFormat = "dd-MM-yyyy HH:mm:ss"),
+            @Mapping(target = "dateFin", source = "dateFin", dateFormat = "dd-MM-yyyy HH:mm:ss")
     })
-    Conges toEntity(CongesCreateDto dto);
+    Conges toEntity(CongesPersistDto dto);
 
+    @Mappings({
+            @Mapping(target = "dateDebut", source = "dateDebut", dateFormat = "dd-MM-yyyy HH:mm:ss"),
+            @Mapping(target = "dateFin", source = "dateFin", dateFormat = "dd-MM-yyyy HH:mm:ss")
+    })
     CongesDto toDto(Conges dto);
 }

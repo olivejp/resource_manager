@@ -2,7 +2,7 @@ package nc.deveo.resource_manager.service;
 
 import lombok.RequiredArgsConstructor;
 import nc.deveo.resource_manager.controller.NotFoundException;
-import nc.deveo.resource_manager.controller.dto.CongesCreateDto;
+import nc.deveo.resource_manager.controller.dto.CongesPersistDto;
 import nc.deveo.resource_manager.controller.dto.CongesDto;
 import nc.deveo.resource_manager.domain.Conges;
 import nc.deveo.resource_manager.mapper.CongesMapper;
@@ -20,7 +20,7 @@ public class CongesService {
     private final CongesRepository repository;
     private final CongesMapper mapper;
 
-    public CongesDto save(CongesCreateDto dto) {
+    public CongesDto save(CongesPersistDto dto) {
         final Conges congesSaved = repository.save(mapper.toEntity(dto));
         return mapper.toDto(congesSaved);
     }
@@ -36,4 +36,5 @@ public class CongesService {
     public void deleteById(final Long id) {
         repository.deleteById(id);
     }
+
 }

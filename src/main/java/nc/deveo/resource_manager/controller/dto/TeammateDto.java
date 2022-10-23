@@ -4,11 +4,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import nc.deveo.resource_manager.controller.validation.CreationTeammate;
 
-import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 public class TeammateDto implements Serializable {
@@ -27,8 +25,7 @@ public class TeammateDto implements Serializable {
     @Size(max = 255, groups = CreationTeammate.class)
     private String prenom;
 
-    @PastOrPresent(groups = CreationTeammate.class)
-    private LocalDateTime dateNaissance;
+    private String dateNaissance;
 
     private String photo;
 

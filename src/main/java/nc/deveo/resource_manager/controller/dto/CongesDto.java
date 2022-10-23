@@ -1,13 +1,12 @@
 package nc.deveo.resource_manager.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import nc.deveo.resource_manager.domain.enums.CongesPortion;
 import nc.deveo.resource_manager.domain.enums.TypeConges;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 public class CongesDto implements Serializable {
@@ -17,12 +16,12 @@ public class CongesDto implements Serializable {
     @JsonSerialize
     private Long id;
 
-    @JsonIgnoreProperties({"photo", "description"})
+    @JsonIncludeProperties({"id", "email"})
     private TeammateDto teammate;
 
-    private LocalDateTime dateDebut;
+    private String dateDebut;
 
-    private LocalDateTime dateFin;
+    private String dateFin;
 
     private TypeConges typeConges;
 

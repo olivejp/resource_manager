@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +30,7 @@ public class Teammate {
     private String prenom;
 
     @Column(name = "date_naissance")
-    private LocalDateTime dateNaissance;
+    private LocalDate dateNaissance;
 
     @Column(name = "photo", columnDefinition = "longtext")
     private String photo;
